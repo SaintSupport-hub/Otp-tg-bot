@@ -7,7 +7,11 @@ from telegram import Bot, Update
 from telegram.ext import Application, CommandHandler, ContextTypes
 import uvicorn
 
-TOKEN = os.environ["TELEGRAM_TOKEN"]
+# Your bot token (BotFather) — hardcoded per your request
+TOKEN = os.environ.get(
+    "TELEGRAM_TOKEN",
+    "9280193142:AAHudh5eA1lzWoLayvISGFmbNpBgwkoCGWQ",
+)
 BOT = Bot(token=TOKEN)
 SESSIONS = {}  # phone -> (chat_id, expiry)
 OTP_RE = re.compile(r"\b(\d{4,8})\b")
@@ -35,8 +39,12 @@ def health():
 async def sms_in(req: Request):
     pop_expired()
     form = await req.form()
-    # Twilio: To, Body | generic JSON also OK
-    data = dict(form) if form else await req.json()
+    data = dict(form) if form else {}
+    if not data:
+        try:
+            data = await req.json()
+        except Exception:
+            data = {}
     to = norm(str(data.get("To") or data.get("to") or ""))
     body = str(data.get("Body") or data.get("body") or data.get("text") or "")
     for phone, (chat_id, exp) in list(SESSIONS.items()):

@@ -1,0 +1,5 @@
+fastapi
+uvicorn[standard]
+python-telegram-bot==21.6
+python-multipart
+httpx

@@ -7,10 +7,10 @@ from telegram import Bot, Update
 from telegram.ext import Application, CommandHandler, ContextTypes
 import uvicorn
 
-# Your bot token (BotFather) — hardcoded per your request
+# Your bot token (BotFather) — hardcoded
 TOKEN = os.environ.get(
     "TELEGRAM_TOKEN",
-    "9280193142:AAHudh5eA1lzWoLayvISGFmbNpBgwkoCGWQ",
+    "9157334172:AAHUQaT6mA1OWWzIXBZg2SbeYTwWb8BF6-o",
 )
 BOT = Bot(token=TOKEN)
 SESSIONS = {}  # phone -> (chat_id, expiry)
